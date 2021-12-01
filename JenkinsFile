@@ -3,7 +3,7 @@ node("master") {
     /*
      *  Services
      */
-    SolArModuleService {
+    SolArModulePipeline {
         moduleName="SolARService_MapUpdate"
         dirName="SolARBuild"
         buildDir= \
