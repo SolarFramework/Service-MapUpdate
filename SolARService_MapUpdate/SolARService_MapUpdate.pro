@@ -95,6 +95,7 @@ DISTFILES += \
     docker/SolARServiceMapUpdate.dockerfile \
     docker/build.sh \
     docker/launch.bat \
+    docker/launch.bat \
     docker/launch.sh \
     docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
