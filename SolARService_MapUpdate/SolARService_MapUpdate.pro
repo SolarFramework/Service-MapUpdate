@@ -17,6 +17,8 @@ DEFINES += WITHREMOTING
 
 include(findremakenrules.pri)
 
+include(../manualincludepath.pri)
+
 CONFIG(debug,debug|release) {
     TARGETDEPLOYDIR = $${PWD}/../bin/Debug
     DEFINES += _DEBUG=1
@@ -94,6 +96,7 @@ DISTFILES += \
     SolARService_MapUpdate_properties.xml \
     docker/SolARServiceMapUpdate.dockerfile \
     docker/build.sh \
+    docker/launch.bat \
     docker/launch.bat \
     docker/launch.sh \
     docker/mapupdate-service-manifest.yaml \
