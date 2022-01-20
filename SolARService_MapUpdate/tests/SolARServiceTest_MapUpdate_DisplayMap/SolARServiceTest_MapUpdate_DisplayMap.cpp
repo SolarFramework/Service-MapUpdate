@@ -171,27 +171,31 @@ int main(int argc, char* argv[])
         std::vector<SRef<CloudPoint>> globalPointCloud;
         std::vector<Transform3Df> globalKeyframesPoses;
 
-        mapUpdatePipeline->getMapRequest(globalMap);
+        if (mapUpdatePipeline->getMapRequest(globalMap) == FrameworkReturnCode::_SUCCESS) {
 
-        LOG_INFO("Map Update request terminated");
+            LOG_INFO("Map Update request terminated");
 
-        globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
-        globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
+            globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
+            globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
 
-        if (globalPointCloud.size() > 0) {
-            for (const auto &it : globalKeyframes)
-                globalKeyframesPoses.push_back(it->getPose());
+            if (globalPointCloud.size() > 0) {
+                for (const auto &it : globalKeyframes)
+                    globalKeyframesPoses.push_back(it->getPose());
 
-            LOG_INFO("==> Display current global map: press ESC on the map display window to end test");
+                LOG_INFO("==> Display current global map: press ESC on the map display window to end test");
 
-            while (true)
-            {
-                if (gViewer3D->display(globalPointCloud, {}, {}, {}, {}, globalKeyframesPoses) == FrameworkReturnCode::_STOP)
-                    break;
+                while (true)
+                {
+                    if (gViewer3D->display(globalPointCloud, {}, {}, {}, {}, globalKeyframesPoses) == FrameworkReturnCode::_STOP)
+                        break;
+                }
+            }
+            else {
+                LOG_INFO("Current global map is empty!");
             }
         }
         else {
-            LOG_INFO("Current global map is empty!");
+            LOG_INFO("No current global map!");
         }
 
         LOG_INFO("Stop map update pipeline");
