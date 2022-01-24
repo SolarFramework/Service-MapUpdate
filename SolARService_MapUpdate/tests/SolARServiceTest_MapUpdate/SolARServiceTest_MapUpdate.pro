@@ -52,7 +52,6 @@ unix {
 
 linux {
     LIBS += -ldl
-    LIBS += -L/home/linuxbrew/.linuxbrew/lib # temporary fix caused by grpc with -lre2 ... without -L in grpc.pc
 }
 
 macx {
@@ -89,6 +88,7 @@ linux {
   CONFIG(debug,debug|release) {
     run_install.extra = cp $$files($${PWD}/../../../runDebug.sh) $${PWD}/../../../run.sh
   }
+  run_install.CONFIG += nostrip
   INSTALLS += run_install
 }
 

@@ -89,6 +89,7 @@ linux {
     CONFIG(debug,debug|release) {
         run_install.extra = cp $$files($${PWD}/start_mapupdate_service_debug.sh) $${PWD}/start_mapupdate_service.sh
     }
+    run_install.CONFIG += nostrip
     INSTALLS += run_install
 }
 
