@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
         gMapManager1->getMap(map1);
         LOG_INFO("Nb points: {}", map1->getConstPointCloud()->getNbPoints());
         mapUpdatePipeline->mapUpdateRequest(map1);
-        std::this_thread::sleep_for(std::chrono::seconds(20));
+//        std::this_thread::sleep_for(std::chrono::seconds(20));
 
         // Display the new global map
         LOG_INFO("Request to get new global map");
@@ -254,7 +254,7 @@ int main(int argc, char* argv[])
         gMapManager2->getMap(map2);
         LOG_INFO("Nb points: {}", map2->getConstPointCloud()->getNbPoints());
         mapUpdatePipeline->mapUpdateRequest(map2);
-        std::this_thread::sleep_for(std::chrono::seconds(20));
+//        std::this_thread::sleep_for(std::chrono::seconds(20));
 
         // Display the final global map
         LOG_INFO("Request to get new global map");
