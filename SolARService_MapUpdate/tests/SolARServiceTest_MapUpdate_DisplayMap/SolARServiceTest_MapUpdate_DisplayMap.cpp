@@ -36,8 +36,6 @@ using namespace SolAR::api;
 using namespace SolAR::datastructure;
 namespace xpcf=org::bcom::xpcf;
 
-#define INDEX_USE_CAMERA 0
-
 // print help options
 void print_help(const cxxopts::Options& options)
 {
@@ -131,25 +129,13 @@ int main(int argc, char* argv[])
         LOG_INFO("Resolve IMapUpdatePipeline interface");
         SRef<pipeline::IMapUpdatePipeline> mapUpdatePipeline = componentManager->resolve<SolAR::api::pipeline::IMapUpdatePipeline>();
 
-        LOG_INFO("Resolve other components");
-        auto gARDevice = componentManager->resolve<input::devices::IARDevice>();
         LOG_INFO("Client components loaded");
-
-        CameraRigParameters camRigParams = gARDevice->getCameraParameters();
-        CameraParameters camParams = camRigParams.cameraParams[INDEX_USE_CAMERA];
 
         LOG_INFO("Initialize map update pipeline");
 
         if (mapUpdatePipeline->init() != FrameworkReturnCode::_SUCCESS)
         {
             LOG_ERROR("Cannot init map update pipeline");
-            return -1;
-        }
-
-        LOG_INFO("Set camera parameters");
-
-        if (mapUpdatePipeline->setCameraParameters(camParams) != FrameworkReturnCode::_SUCCESS) {
-            LOG_ERROR("Cannot set camera parameters for map update pipeline");
             return -1;
         }
 
