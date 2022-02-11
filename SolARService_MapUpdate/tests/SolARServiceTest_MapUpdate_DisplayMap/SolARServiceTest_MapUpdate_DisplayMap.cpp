@@ -163,7 +163,8 @@ int main(int argc, char* argv[])
 
             globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
             globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
-
+            LOG_INFO("Number of keyframes: {}", globalKeyframes.size());
+            LOG_INFO("Number of cloud points: {}", globalPointCloud.size());
             if (globalPointCloud.size() > 0) {
                 for (const auto &it : globalKeyframes)
                     globalKeyframesPoses.push_back(it->getPose());
