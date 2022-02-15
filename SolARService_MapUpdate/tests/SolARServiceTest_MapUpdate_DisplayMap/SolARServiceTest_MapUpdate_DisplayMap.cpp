@@ -131,21 +131,6 @@ int main(int argc, char* argv[])
 
         LOG_INFO("Client components loaded");
 
-        LOG_INFO("Initialize map update pipeline");
-
-        if (mapUpdatePipeline->init() != FrameworkReturnCode::_SUCCESS)
-        {
-            LOG_ERROR("Cannot init map update pipeline");
-            return -1;
-        }
-
-        LOG_INFO("Start map update pipeline");
-
-        if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS) {
-            LOG_ERROR("Cannot start map update pipeline");
-            return -1;
-        }
-
         // Display the current global map
 
         auto gViewer3D = componentManager->resolve<display::I3DPointsViewer>();
@@ -184,10 +169,6 @@ int main(int argc, char* argv[])
         else {
             LOG_INFO("No current global map!");
         }
-
-        LOG_INFO("Stop map update pipeline");
-
-        mapUpdatePipeline->stop();
 
     }
     catch (xpcf::Exception & e) {
