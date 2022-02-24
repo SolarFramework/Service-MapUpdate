@@ -47,13 +47,13 @@
             <!--property name="channelUrl" access="rw" type="string" value="mapupdate-service.artwin.b-com.com:31888"/-->
             <property name="channelCredentials" access="rw" type="uint" value="0"/>
         </configure>
-<!--
+
         <configure component="IMapUpdatePipeline_grpcProxy">
           <property name="grpc_compress_proxy" type="string">
             <value>method|getMapRequest|none|none</value>
           </property>
         </configure>
--->
+
         <!-- Remote client configuration-->
         <configure component="SolAR3DPointsViewerOpengl">
             <property name="title" type="string" value="Global Map"/>
