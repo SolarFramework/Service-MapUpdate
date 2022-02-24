@@ -13,6 +13,13 @@
         </configure>
         -->
 
+        <configure component="IMapUpdatePipeline_grpcServer">
+          <property name="grpc_compress_server" type="string">
+            <value>method|mapUpdateRequest|none|0</value>
+            <value>method|getMapRequest|deflate|0</value>
+          </property>
+        </configure>
+
         <!-- map update pipeline configuration -->
         <configure component="SolARMapManager">
                 <property name="directory" type="string" value="../../data/maps/globalMap"/>
@@ -67,7 +74,7 @@
         </configure>
         <configure component="SolARKeyframeRetrieverFBOW">
                 <property name="VOCpath" type="String" value="../../data/fbow_voc/akaze.fbow"/>
-                <property name="threshold" type="float" value="0.02"/>
+                <property name="threshold" type="float" value="0.01"/>
                 <property name="level" type="int" value="3"/>
                 <property name="matchingDistanceRatio" type="float" value="0.8"/>
                 <property name="matchingDistanceMax" type="float" value="800"/>

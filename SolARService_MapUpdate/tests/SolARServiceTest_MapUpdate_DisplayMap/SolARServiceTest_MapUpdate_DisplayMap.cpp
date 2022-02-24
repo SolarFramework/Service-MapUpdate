@@ -36,8 +36,6 @@ using namespace SolAR::api;
 using namespace SolAR::datastructure;
 namespace xpcf=org::bcom::xpcf;
 
-#define INDEX_USE_CAMERA 0
-
 // print help options
 void print_help(const cxxopts::Options& options)
 {
@@ -131,25 +129,13 @@ int main(int argc, char* argv[])
         LOG_INFO("Resolve IMapUpdatePipeline interface");
         SRef<pipeline::IMapUpdatePipeline> mapUpdatePipeline = componentManager->resolve<SolAR::api::pipeline::IMapUpdatePipeline>();
 
-        LOG_INFO("Resolve other components");
-        auto gARDevice = componentManager->resolve<input::devices::IARDevice>();
         LOG_INFO("Client components loaded");
-
-        CameraRigParameters camRigParams = gARDevice->getCameraParameters();
-        CameraParameters camParams = camRigParams.cameraParams[INDEX_USE_CAMERA];
 
         LOG_INFO("Initialize map update pipeline");
 
         if (mapUpdatePipeline->init() != FrameworkReturnCode::_SUCCESS)
         {
             LOG_ERROR("Cannot init map update pipeline");
-            return -1;
-        }
-
-        LOG_INFO("Set camera parameters");
-
-        if (mapUpdatePipeline->setCameraParameters(camParams) != FrameworkReturnCode::_SUCCESS) {
-            LOG_ERROR("Cannot set camera parameters for map update pipeline");
             return -1;
         }
 
@@ -171,27 +157,31 @@ int main(int argc, char* argv[])
         std::vector<SRef<CloudPoint>> globalPointCloud;
         std::vector<Transform3Df> globalKeyframesPoses;
 
-        mapUpdatePipeline->getMapRequest(globalMap);
+        if (mapUpdatePipeline->getMapRequest(globalMap) == FrameworkReturnCode::_SUCCESS) {
 
-        LOG_INFO("Map Update request terminated");
+            LOG_INFO("Map Update request terminated");
 
-        globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
-        globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
+            globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
+            globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
 
-        if (globalPointCloud.size() > 0) {
-            for (const auto &it : globalKeyframes)
-                globalKeyframesPoses.push_back(it->getPose());
+            if (globalPointCloud.size() > 0) {
+                for (const auto &it : globalKeyframes)
+                    globalKeyframesPoses.push_back(it->getPose());
 
-            LOG_INFO("==> Display current global map: press ESC on the map display window to end test");
+                LOG_INFO("==> Display current global map: press ESC on the map display window to end test");
 
-            while (true)
-            {
-                if (gViewer3D->display(globalPointCloud, {}, {}, {}, {}, globalKeyframesPoses) == FrameworkReturnCode::_STOP)
-                    break;
+                while (true)
+                {
+                    if (gViewer3D->display(globalPointCloud, {}, {}, {}, {}, globalKeyframesPoses) == FrameworkReturnCode::_STOP)
+                        break;
+                }
+            }
+            else {
+                LOG_INFO("Current global map is empty!");
             }
         }
         else {
-            LOG_INFO("Current global map is empty!");
+            LOG_INFO("No current global map!");
         }
 
         LOG_INFO("Stop map update pipeline");
