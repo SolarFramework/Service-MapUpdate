@@ -131,18 +131,17 @@ int main(int argc, char* argv[])
 
         LOG_INFO("Client components loaded");
 
-        LOG_INFO("Initialize map update pipeline");
-
+        // Initialize Map Update service
         if (mapUpdatePipeline->init() != FrameworkReturnCode::_SUCCESS)
         {
-            LOG_ERROR("Cannot init map update pipeline");
+            LOG_ERROR("Failed to initialize Map Update service");
             return -1;
         }
 
-        LOG_INFO("Start map update pipeline");
-
-        if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS) {
-            LOG_ERROR("Cannot start map update pipeline");
+        // Start Map Update service
+        if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS)
+        {
+            LOG_ERROR("Failed to start Map Update service");
             return -1;
         }
 
@@ -163,7 +162,8 @@ int main(int argc, char* argv[])
 
             globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
             globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
-
+            LOG_INFO("Number of keyframes: {}", globalKeyframes.size());
+            LOG_INFO("Number of cloud points: {}", globalPointCloud.size());
             if (globalPointCloud.size() > 0) {
                 for (const auto &it : globalKeyframes)
                     globalKeyframesPoses.push_back(it->getPose());
@@ -184,10 +184,12 @@ int main(int argc, char* argv[])
             LOG_INFO("No current global map!");
         }
 
-        LOG_INFO("Stop map update pipeline");
-
-        mapUpdatePipeline->stop();
-
+        // Stop Map Update service
+        if (mapUpdatePipeline->stop() != FrameworkReturnCode::_SUCCESS)
+        {
+            LOG_ERROR("Failed to stop Map Update service");
+            return -1;
+        }
     }
     catch (xpcf::Exception & e) {
         LOG_INFO("The following exception has been caught: {}", e.what());
