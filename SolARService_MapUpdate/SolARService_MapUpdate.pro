@@ -109,7 +109,9 @@ DISTFILES += \
 
 xml_files.path = $${TARGETDEPLOYDIR}
 xml_files.files =  $$files($${PWD}/SolARService_MapUpdate_modules.xml) \
-                   $$files($${PWD}/SolARService_MapUpdate_properties.xml)
+                   $$files($${PWD}/SolARService_MapUpdate_properties.xml) \
+                   $$files($${PWD}/SolARService_MapUpdate_modules_cuda.xml) \
+                   $$files($${PWD}/SolARService_MapUpdate_properties_cuda.xml)
 
 INSTALLS += xml_files
 

@@ -54,12 +54,12 @@
         <configure component="SolARDescriptorMatcherRegionOpencv">
                 <property name="distanceRatio" type="float" value="0.8"/>
                 <property name="radius" type="float" value="15"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+                <property name="matchingDistanceMax" type="float" value="300"/>
         </configure>
         <configure component="SolARDescriptorMatcherGeometricOpencv">
                 <property name="distanceRatio" type="float" value="0.7"/>
                 <property name="paddingRatio" type="float" value="0.003"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+                <property name="matchingDistanceMax" type="float" value="300"/>
         </configure>
         <configure component="SolARGeometricMatchesFilterOpencv">
                 <property name="confidence" type="float" value="0.99"/>
@@ -67,11 +67,11 @@
                 <property name="epilinesDistance" type="float" value="3.0"/>
         </configure>       
         <configure component="SolARKeyframeRetrieverFBOW">
-                <property name="VOCpath" type="String" value="../../data/fbow_voc/akaze.fbow"/>
+                <property name="VOCpath" type="String" value="../../data/fbow_voc/popsift_uint8.fbow"/>
                 <property name="threshold" type="float" value="0.01"/>
                 <property name="level" type="int" value="3"/>
                 <property name="matchingDistanceRatio" type="float" value="0.8"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+                <property name="matchingDistanceMax" type="float" value="300"/>
         </configure>
         <configure component="SolAROptimizationG2O">
                 <property name="nbIterationsLocal" type="int" value="10"/>
