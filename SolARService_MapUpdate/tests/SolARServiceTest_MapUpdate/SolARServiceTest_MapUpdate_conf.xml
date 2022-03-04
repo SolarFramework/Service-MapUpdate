@@ -67,8 +67,8 @@
 
         <configure component="IMapUpdatePipeline_grpcProxy">
           <property name="grpc_compress_proxy" type="string">
-            <value>method|mapUpdateRequest|deflate|none</value>
-            <value>method|getMapRequest|none|deflate</value>
+            <value>method|mapUpdateRequest|none|none</value>
+            <value>method|getMapRequest|none|none</value>
           </property>
         </configure>
 

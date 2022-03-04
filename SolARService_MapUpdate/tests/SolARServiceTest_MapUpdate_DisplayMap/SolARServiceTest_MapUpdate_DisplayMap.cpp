@@ -131,6 +131,20 @@ int main(int argc, char* argv[])
 
         LOG_INFO("Client components loaded");
 
+        // Initialize Map Update service
+        if (mapUpdatePipeline->init() != FrameworkReturnCode::_SUCCESS)
+        {
+            LOG_ERROR("Failed to initialize Map Update service");
+            return -1;
+        }
+
+        // Start Map Update service
+        if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS)
+        {
+            LOG_ERROR("Failed to start Map Update service");
+            return -1;
+        }
+
         // Display the current global map
 
         auto gViewer3D = componentManager->resolve<display::I3DPointsViewer>();
@@ -170,6 +184,12 @@ int main(int argc, char* argv[])
             LOG_INFO("No current global map!");
         }
 
+        // Stop Map Update service
+        if (mapUpdatePipeline->stop() != FrameworkReturnCode::_SUCCESS)
+        {
+            LOG_ERROR("Failed to stop Map Update service");
+            return -1;
+        }
     }
     catch (xpcf::Exception & e) {
         LOG_INFO("The following exception has been caught: {}", e.what());
