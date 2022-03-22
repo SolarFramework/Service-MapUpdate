@@ -3,17 +3,15 @@ MAINTAINER Christophe Cutullic christophe.cutullic@b-com.com
 
 ## Configure Ubuntu environment
 RUN apt-get update -y
-RUN apt-get install -y libgtk-3-0
+RUN apt-get install -y libgtk2.0-dev
 RUN apt-get install -y libva-dev
 RUN apt-get install -y libvdpau-dev
 
-## Copy SolARServiceMapUpdate app files
-RUN mkdir SolARServiceMapUpdate
-
 ## Data files (fbow vocabulary)
+RUN mkdir SolARServiceMapUpdate
 RUN mkdir SolARServiceMapUpdate/data
 RUN mkdir SolARServiceMapUpdate/data/fbow_voc
-ADD data/fbow_voc/* /SolARServiceMapUpdate/data/fbow_voc/
+ADD data/fbow_voc/akaze.fbow /SolARServiceMapUpdate/data/fbow_voc/
 RUN mkdir SolARServiceMapUpdate/data/maps
 RUN mkdir SolARServiceMapUpdate/data/maps/globalMap
 
