@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM nvidia/cuda:11.4.0-base-ubuntu18.04
 MAINTAINER Christophe Cutullic christophe.cutullic@b-com.com
 
 ## Configure Ubuntu environment
@@ -11,7 +11,7 @@ RUN apt-get install -y libvdpau-dev
 RUN mkdir SolARServiceMapUpdate
 RUN mkdir SolARServiceMapUpdate/data
 RUN mkdir SolARServiceMapUpdate/data/fbow_voc
-ADD data/fbow_voc/akaze.fbow /SolARServiceMapUpdate/data/fbow_voc/
+ADD data/fbow_voc/popsift_uint8.fbow /SolARServiceMapUpdate/data/fbow_voc/
 
 # Persistent volume for global map
 VOLUME SolARServiceMapUpdate/data/maps/globalMap
@@ -19,15 +19,15 @@ VOLUME SolARServiceMapUpdate/data/maps/globalMap
 ## Libraries and modules
 RUN mkdir SolARServiceMapUpdate/modules
 ADD modules/* /SolARServiceMapUpdate/modules/
-ADD modules_no_cuda/* /SolARServiceMapUpdate/modules/
+ADD modules_cuda/* /SolARServiceMapUpdate/modules/
 
 ## Project files
 ADD SolARService_MapUpdate /SolARServiceMapUpdate/
 RUN chmod +x /SolARServiceMapUpdate/SolARService_MapUpdate
 RUN mkdir .xpcf
 ADD *.xml /.xpcf/
-ADD docker/start_server.sh .
-RUN chmod +x start_server.sh
+ADD docker/start_server_cuda.sh .
+RUN chmod +x start_server_cuda.sh
 
 ## Set application gRPC server url
 ENV XPCF_GRPC_SERVER_URL=0.0.0.0:8080
@@ -40,4 +40,4 @@ ENV XPCF_GRPC_MAX_SEND_MSG_SIZE=-1
 ENV SOLAR_LOG_LEVEL=INFO
 
 ## Run Server
-CMD [ "./start_server.sh"  ]
+CMD [ "./start_server_cuda.sh"  ]
