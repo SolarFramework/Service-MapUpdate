@@ -96,19 +96,25 @@ DISTFILES += \
     SolARService_MapUpdate_modules.xml \
     SolARService_MapUpdate_properties.xml \
     docker/SolARServiceMapUpdate.dockerfile \
+    docker/SolARServiceMapUpdate_cuda.dockerfile \
     docker/build.sh \
+    docker/build_cuda.sh \
     docker/launch.bat \
     docker/launch.bat \
     docker/launch.sh \
+    docker/launch_cuda.sh \
     docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
+    docker/start_server_cuda.sh \
     packagedependencies.txt \
     start_mapupdate_service_debug.sh \
     start_mapupdate_service_release.sh
 
 xml_files.path = $${TARGETDEPLOYDIR}
 xml_files.files =  $$files($${PWD}/SolARService_MapUpdate_modules.xml) \
-                   $$files($${PWD}/SolARService_MapUpdate_properties.xml)
+                   $$files($${PWD}/SolARService_MapUpdate_properties.xml) \
+                   $$files($${PWD}/SolARService_MapUpdate_modules_cuda.xml) \
+                   $$files($${PWD}/SolARService_MapUpdate_properties_cuda.xml)
 
 INSTALLS += xml_files
 
