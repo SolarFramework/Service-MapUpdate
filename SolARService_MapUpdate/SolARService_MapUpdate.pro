@@ -90,6 +90,17 @@ linux {
     }
     run_install.CONFIG += nostrip
     INSTALLS += run_install
+
+    run_install_cuda.path = $${TARGETDEPLOYDIR}
+    run_install_cuda.files = $${PWD}/start_mapupdate_service_cuda.sh
+    CONFIG(release,debug|release) {
+        run_install_cuda.extra = cp $$files($${PWD}/start_mapupdate_service_release_cuda.sh) $${PWD}/start_mapupdate_service_cuda.sh
+    }
+    CONFIG(debug,debug|release) {
+        run_install_cuda.extra = cp $$files($${PWD}/start_mapupdate_service_debug_cuda.sh) $${PWD}/start_mapupdate_service_cuda.sh
+    }
+    run_install_cuda.CONFIG += nostrip
+    INSTALLS += run_install_cuda
 }
 
 DISTFILES += \
@@ -108,7 +119,9 @@ DISTFILES += \
     docker/start_server_cuda.sh \
     packagedependencies.txt \
     start_mapupdate_service_debug.sh \
-    start_mapupdate_service_release.sh
+    start_mapupdate_service_debug_cuda.sh \
+    start_mapupdate_service_release.sh \
+    start_mapupdate_service_release_cuda.sh
 
 xml_files.path = $${TARGETDEPLOYDIR}
 xml_files.files =  $$files($${PWD}/SolARService_MapUpdate_modules.xml) \
