@@ -19,6 +19,10 @@
             <value>method|getMapRequest|deflate|0</value>
           </property>
         </configure>
+		
+		<configure component="PipelineMapUpdateProcessing">
+			<property name="nbKeyframeSubmap" type="int" value="50"/>
+        </configure>
 
         <!-- map update pipeline configuration -->
         <configure component="SolARMapManager">

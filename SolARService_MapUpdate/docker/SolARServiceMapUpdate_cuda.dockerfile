@@ -14,7 +14,7 @@ RUN mkdir SolARServiceMapUpdate/data/fbow_voc
 ADD data/fbow_voc/popsift_uint8.fbow /SolARServiceMapUpdate/data/fbow_voc/
 
 # Persistent volume for global map
-VOLUME SolARServiceMapUpdate/data/maps/globalMap
+VOLUME SolARServiceMapUpdate/data/maps/globalMapCuda
 
 ## Libraries and modules
 RUN mkdir SolARServiceMapUpdate/modules

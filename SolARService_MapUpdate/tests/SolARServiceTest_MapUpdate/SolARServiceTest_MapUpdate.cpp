@@ -155,6 +155,15 @@ int main(int argc, char* argv[])
             return -1;
         }
 
+        LOG_INFO("Try to reset the global map from Map Update remote pipeline");
+
+        if (mapUpdatePipeline->resetMap() != FrameworkReturnCode::_SUCCESS) {
+            LOG_ERROR("Cannot reset global map!");
+            return -1;
+        }
+
+        LOG_INFO("Reset Map OK: initial global map is empty");
+
         LOG_INFO("Start map update pipeline");
 
         if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS) {
@@ -162,36 +171,7 @@ int main(int argc, char* argv[])
             return -1;
         }
 
-        // Display the initial global map
-
         auto gViewer3D = componentManager->resolve<display::I3DPointsViewer>();
-
-        LOG_INFO("Try to get initial global map from Map Update remote pipeline");
-
-        SRef<Map> globalMap;
-        std::vector<SRef<Keyframe>> globalKeyframes;
-        std::vector<SRef<CloudPoint>> globalPointCloud;
-        std::vector<Transform3Df> globalKeyframesPoses;
-
-        if (mapUpdatePipeline->getMapRequest(globalMap) == FrameworkReturnCode::_SUCCESS) {
-            globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
-            globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
-
-            if (globalPointCloud.size() > 0) {
-                for (const auto &it : globalKeyframes)
-                    globalKeyframesPoses.push_back(it->getPose());
-
-                LOG_INFO("\n==> Display initial global map\n");
-
-                gViewer3D->display(globalPointCloud, {}, {}, {}, {}, globalKeyframesPoses);
-            }
-            else {
-                LOG_INFO("Initial global map is empty!");
-            }
-        }
-        else {
-            LOG_INFO("No initial global map!");
-        }
 
         LOG_INFO("Load local map 1");
 
