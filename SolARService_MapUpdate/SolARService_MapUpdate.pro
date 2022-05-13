@@ -113,6 +113,7 @@ DISTFILES += \
     docker/launch.bat \
     docker/launch.bat \
     docker/launch.sh \
+    docker/launch_cuda.bat \
     docker/launch_cuda.sh \
     docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
