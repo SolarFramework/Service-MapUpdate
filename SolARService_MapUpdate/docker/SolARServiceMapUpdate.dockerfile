@@ -19,6 +19,7 @@ VOLUME SolARServiceMapUpdate/data/maps/globalMap
 ## Libraries and modules
 RUN mkdir SolARServiceMapUpdate/modules
 ADD modules/* /SolARServiceMapUpdate/modules/
+ADD modules_common/* /SolARServiceMapUpdate/modules/
 ADD modules_no_cuda/* /SolARServiceMapUpdate/modules/
 
 ## Project files
