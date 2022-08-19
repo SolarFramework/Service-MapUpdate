@@ -99,6 +99,7 @@ data*
 *aps
 bin/*
 */build*/
+*build-rules*
 run.sh
 start_service.sh
 
