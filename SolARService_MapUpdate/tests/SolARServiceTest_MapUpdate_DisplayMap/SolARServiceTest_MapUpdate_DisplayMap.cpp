@@ -212,6 +212,15 @@ int main(int argc, char* argv[])
 
             LOG_INFO("Map Update request terminated");
 
+            // Backup global map if option specified
+            if (backup_folder != "")
+            {
+                LOG_INFO("Store global map on local folder: {}", backup_folder);
+                mapManager->bindTo<xpcf::IConfigurable>()->getProperty("directory")->setStringValue(backup_folder.c_str());
+                mapManager->setMap(globalMap);
+                mapManager->saveToFile();
+            }
+
             globalMap->getConstKeyframeCollection()->getAllKeyframes(globalKeyframes);
             globalMap->getConstPointCloud()->getAllPoints(globalPointCloud);
             LOG_INFO("Number of keyframes: {}", globalKeyframes.size());
@@ -241,15 +250,6 @@ int main(int argc, char* argv[])
         {
             LOG_ERROR("Failed to stop Map Update service");
             return -1;
-        }
-
-        // Backup global map if option specified
-        if (backup_folder != "")
-        {
-            LOG_INFO("Store global map on local folder: {}", backup_folder);
-            mapManager->bindTo<xpcf::IConfigurable>()->getProperty("directory")->setStringValue(backup_folder.c_str());
-            mapManager->setMap(globalMap);
-            mapManager->saveToFile();
         }
     }
     catch (xpcf::Exception & e) {
