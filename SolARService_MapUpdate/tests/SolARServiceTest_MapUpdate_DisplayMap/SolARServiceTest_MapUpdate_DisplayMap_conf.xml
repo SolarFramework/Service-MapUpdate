@@ -12,6 +12,10 @@
 
     <!-- Module used by the remote client -->
     <module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools"  description="SolARModuleTools"  path="$XPCF_MODULE_ROOT/SolARBuild/SolARModuleTools/1.0.0/lib/x86_64/shared">
+        <component uuid="8e3c926a-0861-46f7-80b2-8abb5576692c" name="SolARMapManager" description="SolARMapManager">
+            <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
+            <interface uuid="90075c1b-915b-469d-b92d-41c5d575bf15" name="IMapManager" description="IMapManager"/>
+        </component>
         <component uuid="958165e9-c4ea-4146-be50-b527a9a851f0" name="SolARPointCloudManager" description="SolARPointCloudManager">
             <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
             <interface uuid="264d4406-b726-4ce9-a430-35d8b5e70331" name="IPointCloudManager" description="IPointCloudManager"/>
@@ -104,6 +108,17 @@
             </property>
             <property name="zoomSensitivity" type="float" value="10.0"/>
             <property name="exitKey" type="int" value="27"/>
+        </configure>
+        <configure component="SolARMapManager">
+                <property name="directory" type="string" value="directory"/>
+                <property name="identificationFileName" type="string" value="identification.bin"/>
+                <property name="coordinateFileName" type="string" value="coordinate.bin"/>
+                <property name="pointCloudManagerFileName" type="string" value="pointcloud.bin"/>
+                <property name="keyframesManagerFileName" type="string" value="keyframes.bin"/>
+                <property name="covisibilityGraphFileName" type="string" value="covisibility_graph.bin"/>
+                <property name="keyframeRetrieverFileName" type="string" value="keyframe_retriever.bin"/>
+                <property name="reprojErrorThreshold" type="float" value="10.0"/>
+                <property name="thresConfidence" type="float" value="0.03"/>
         </configure>
     </properties>
 

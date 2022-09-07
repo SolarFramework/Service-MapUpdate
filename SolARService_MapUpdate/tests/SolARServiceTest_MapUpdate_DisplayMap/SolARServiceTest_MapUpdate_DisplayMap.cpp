@@ -61,8 +61,9 @@ int main(int argc, char* argv[])
     option_list.add_options()
             ("h,help", "display this help and exit")
             ("v,version", "display version information and exit")
-            ("f,file", "xpcf grpc client configuration file",
-             cxxopts::value<string>());
+            ("f,file", "xpcf grpc client configuration file", cxxopts::value<string>())
+            ("b,backup", "Backup current global map to specified local folder", cxxopts::value<string>())
+            ("r,restore", "Restore global map from specified local folder", cxxopts::value<string>());
 
     auto options = option_list.parse(argc, argv);
     if (options.count("help")) {
@@ -129,6 +130,24 @@ int main(int argc, char* argv[])
         LOG_INFO("Resolve IMapUpdatePipeline interface");
         SRef<pipeline::IMapUpdatePipeline> mapUpdatePipeline = componentManager->resolve<SolAR::api::pipeline::IMapUpdatePipeline>();
 
+        SRef<storage::IMapManager> mapManager = componentManager->resolve<SolAR::api::storage::IMapManager>();
+
+        string backup_folder = "", restore_folder = "";
+
+        // Check  backup/restore options
+        if ((options.count("backup")) && (!options["backup"].as<string>().empty()))
+        {
+            backup_folder = options["backup"].as<string>();
+            LOG_INFO("Backup option set to folder: {}", backup_folder);
+        }
+        if ((options.count("restore")) && (!options["restore"].as<string>().empty()))
+        {
+            restore_folder = options["restore"].as<string>();
+            LOG_INFO("Restore option set from folder: {}", restore_folder);
+        }
+
+        LOG_INFO("Load Client Remote Map Update Pipeline configuration file: {}", file);
+
         LOG_INFO("Client components loaded");
 
         // Initialize Map Update service
@@ -138,11 +157,44 @@ int main(int argc, char* argv[])
             return -1;
         }
 
+        // Reset global map if option "restore" is specified
+        if (restore_folder != "")
+        {
+            LOG_INFO("Reset global map before restore");
+            mapUpdatePipeline->resetMap();
+        }
+
         // Start Map Update service
         if (mapUpdatePipeline->start() != FrameworkReturnCode::_SUCCESS)
         {
             LOG_ERROR("Failed to start Map Update service");
             return -1;
+        }
+
+        // Restore global map if option specified
+        if (restore_folder != "")
+        {
+            LOG_INFO("Restore global map from local folder: {}", restore_folder);
+
+            mapManager->bindTo<xpcf::IConfigurable>()->getProperty("directory")->setStringValue(restore_folder.c_str());
+
+            if (mapManager->loadFromFile() == FrameworkReturnCode::_SUCCESS)
+            {
+                SRef<Map> global_map;
+                mapManager->getMap(global_map);
+                if (mapUpdatePipeline->mapUpdateRequest(global_map) == FrameworkReturnCode::_SUCCESS)
+                {
+                    LOG_INFO("Global map restored from backup");
+                }
+                else
+                {
+                    LOG_ERROR("Failed to restore global map");
+                }
+            }
+            else
+            {
+                LOG_ERROR("Failed to load global map from files");
+            }
         }
 
         // Display the current global map
@@ -189,6 +241,15 @@ int main(int argc, char* argv[])
         {
             LOG_ERROR("Failed to stop Map Update service");
             return -1;
+        }
+
+        // Backup global map if option specified
+        if (backup_folder != "")
+        {
+            LOG_INFO("Store global map on local folder: {}", backup_folder);
+            mapManager->bindTo<xpcf::IConfigurable>()->getProperty("directory")->setStringValue(backup_folder.c_str());
+            mapManager->setMap(globalMap);
+            mapManager->saveToFile();
         }
     }
     catch (xpcf::Exception & e) {
