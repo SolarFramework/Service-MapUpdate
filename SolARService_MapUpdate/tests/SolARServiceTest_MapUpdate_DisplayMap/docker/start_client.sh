@@ -19,11 +19,23 @@ sed -i -e "s/MAPUPDATE_SERVICE_URL/$MAPUPDATE_SERVICE_URL/g" /.xpcf/SolARService
 
 echo "XML configuration file ready"
 
-## Set application log level
-## Log level expected: DEBUG, CRITICAL, ERROR, INFO, TRACE, WARNING
-export SOLAR_LOG_LEVEL=INFO
-
 export LD_LIBRARY_PATH=.:./modules/
+
+echo "Check map backup/restore options"
+
+if echo $MAP_OPTION | grep -q "BACKUP"
+then
+    ## Start client with "backup" option
+    ./SolARServiceTest_MapUpdate_DisplayMap -f /.xpcf/SolARServiceTest_MapUpdate_DisplayMap_conf.xml -b ./MapBackup
+    exit 0
+fi
+
+if echo $MAP_OPTION | grep -q "RESTORE"
+then
+    ## Start client with "restore" option
+    ./SolARServiceTest_MapUpdate_DisplayMap -f /.xpcf/SolARServiceTest_MapUpdate_DisplayMap_conf.xml -r ./MapBackup
+    exit 0
+fi
 
 ## Start client
 ./SolARServiceTest_MapUpdate_DisplayMap -f /.xpcf/SolARServiceTest_MapUpdate_DisplayMap_conf.xml
