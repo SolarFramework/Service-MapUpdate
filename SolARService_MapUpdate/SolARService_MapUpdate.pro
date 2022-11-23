@@ -115,7 +115,6 @@ DISTFILES += \
     docker/launch.sh \
     docker/launch_cuda.bat \
     docker/launch_cuda.sh \
-    docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
     docker/start_server_cuda.sh \
     packagedependencies.txt \
