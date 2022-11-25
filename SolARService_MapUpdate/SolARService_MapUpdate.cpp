@@ -27,6 +27,8 @@
 #include <boost/filesystem/detail/utf8_codecvt_facet.hpp>
 #include "core/Log.h"
 
+#include "api/pipeline/IServiceManagerPipeline.h"
+
 using namespace SolAR;
 
 namespace fs = boost::filesystem;
@@ -157,7 +159,7 @@ int main(int argc, char* argv[])
     if (cmpMgr->load(configSrc.c_str()) != org::bcom::xpcf::_SUCCESS) {
         LOG_ERROR("Failed to load modules configuration file: {}", configSrc);
         return -1;
-    }    
+    }
 
     configSrc = options["properties"].as<std::string>();
     if (bUseCuda) configSrc.insert(configSrc.length()-4,"_cuda");
@@ -169,6 +171,22 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    // Get the external URL of the service
+    char * externalURL = getenv("SERVER_EXTERNAL_URL");
+    if (externalURL == nullptr) {
+        LOG_ERROR("The external URL of the service must be defined using the SERVER_EXTERNAL_URL env var!");
+        return -1;
+    }
+
+    LOG_DEBUG("Environment variable SERVER_EXTERNAL_URL: {}", externalURL);
+
+    // Get Service Manager proxy
+    auto serviceManager = cmpMgr->resolve<api::pipeline::IServiceManagerPipeline>();
+
+    LOG_DEBUG("Register the new service to the Service Manager with URL: {}", externalURL);
+
+    serviceManager->registerService(api::pipeline::ServiceType::MAP_UPDATE_SERVICE, std::string(externalURL));
+
     auto serverMgr = cmpMgr->resolve<xpcf::IGrpcServerManager>();
 
     // Check environment variables
@@ -176,7 +194,6 @@ int main(int argc, char* argv[])
     tryConfigureServer(serverMgr, "server_credentials", "XPCF_GRPC_CREDENTIALS");
     tryConfigureServer(serverMgr, "max_receive_message_size", "XPCF_GRPC_MAX_RECV_MSG_SIZE");
     tryConfigureServer(serverMgr, "max_send_message_size", "XPCF_GRPC_MAX_SEND_MSG_SIZE");
-    tryConfigureServer(serverMgr, "external_url", "SERVER_EXTERNAL_URL");
 
     LOG_INFO ("LOG LEVEL: {}", str_log_level);
     LOG_INFO ("GRPC SERVER ADDRESS: {}",
@@ -197,13 +214,15 @@ int main(int argc, char* argv[])
     else {
         LOG_INFO ("GRPC MAX SENT MESSAGE SIZE: {}", max_msg_size);
     }
+
     LOG_INFO ("XPCF gRPC server listens on: {}",
               serverMgr->bindTo<xpcf::IConfigurable>()->getProperty("server_address")->getStringValue())
 
-    LOG_INFO ("EXTERNAL URL: {}",
-              serverMgr->bindTo<xpcf::IConfigurable>()->getProperty("external_url")->getStringValue());
-
     serverMgr->runServer();
+
+    LOG_DEBUG("Unregister the service to the Service Manager");
+
+    serviceManager->unregisterService(api::pipeline::ServiceType::RELOCALIZATION_SERVICE, std::string(externalURL));
 
     return 0;
 }
