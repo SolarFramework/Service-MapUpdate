@@ -17,7 +17,7 @@ if [ "$2" ]
 then
     echo "Service Manager URL = $2"
 else
-    echo "You need to give Service Manager URL as parameter!"
+    echo "You need to give Service Manager URL as second parameter!"
     exit 1
 fi
 
