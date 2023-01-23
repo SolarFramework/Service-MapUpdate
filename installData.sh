@@ -4,6 +4,8 @@ mkdir -p data/fbow_voc
 unzip -o fbow_voc.zip -d ./data/fbow_voc
 rm fbow_voc.zip
 
+curl https://repository.solarframework.org/generic/FbowVoc/popsift_uint8.fbow -L -o data/fbow_voc/popsift_uint8.fbow
+
 # Download maps
 curl https://repository.solarframework.org/generic/maps/hololens/bcomLab/mapLabA_linux_0_10_0.zip -L -o mapA.zip
 unzip -o mapA.zip -d ./data/maps
