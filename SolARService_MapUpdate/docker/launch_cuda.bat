@@ -28,3 +28,5 @@ SET SOLAR_LOG_LEVEL=INFO
 
 docker rm -f solarservicemapupdatecuda
 docker run --gpus all -d -p %1:8080 -v volume_map_cuda:/SolARServiceMapUpdate/data/maps/globalMapCuda -e SERVER_EXTERNAL_URL -e SERVICE_MANAGER_URL -e SOLAR_LOG_LEVEL -e "SERVICE_NAME=SolARServiceMapUpdateCuda" --log-opt max-size=50m -e "SERVICE_TAGS=SolAR" --name solarservicemapupdatecuda artwin/solar/services/map-update-cuda-service:latest
+
+:end
