@@ -55,7 +55,7 @@
                 <property name="minNbInliers" type="int" value="30"/>
         </configure>
         <configure component="SolARDescriptorMatcherKNNOpencv">
-                <property name="distanceRatio" type="float" value="0.8"/>
+                <property name="distanceRatio" type="float" value="0.9"/>
         </configure>
         <configure component="SolARDescriptorMatcherRegionOpencv">
                 <property name="distanceRatio" type="float" value="0.8"/>
