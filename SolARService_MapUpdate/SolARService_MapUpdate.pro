@@ -6,7 +6,7 @@ QMAKE_PROJECT_DEPTH = 0
 
 ## global defintions : target lib name, version
 TARGET = SolARService_MapUpdate
-VERSION = 1.0.0
+VERSION = 1.1.0
 PROJECTDEPLOYDIR = $${PWD}/../deploy
 
 CONFIG += c++1z
@@ -115,7 +115,6 @@ DISTFILES += \
     docker/launch.sh \
     docker/launch_cuda.bat \
     docker/launch_cuda.sh \
-    docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
     docker/start_server_cuda.sh \
     packagedependencies.txt \
