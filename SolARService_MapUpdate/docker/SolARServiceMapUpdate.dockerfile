@@ -13,7 +13,7 @@ RUN mkdir SolARServiceMapUpdate/data
 RUN mkdir SolARServiceMapUpdate/data/fbow_voc
 ADD data/fbow_voc/akaze.fbow /SolARServiceMapUpdate/data/fbow_voc/
 
-# Persistent volume for global map
+## Persistent volume for global map
 VOLUME SolARServiceMapUpdate/data/maps/globalMap
 
 ## Libraries and modules

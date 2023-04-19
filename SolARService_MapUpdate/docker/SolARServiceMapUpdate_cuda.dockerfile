@@ -11,9 +11,9 @@ RUN apt-get install -y libvdpau-dev
 RUN mkdir SolARServiceMapUpdate
 RUN mkdir SolARServiceMapUpdate/data
 RUN mkdir SolARServiceMapUpdate/data/fbow_voc
-ADD data/fbow_voc/popsift_uint8.fbow /SolARServiceMapUpdate/data/fbow_voc/
+ADD data/fbow_voc/popsift_uint8_indoor.fbow /SolARServiceMapUpdate/data/fbow_voc/
 
-# Persistent volume for global map
+## Persistent volume for global map
 VOLUME SolARServiceMapUpdate/data/maps/globalMapCuda
 
 ## Libraries and modules
