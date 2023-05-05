@@ -6,6 +6,9 @@ echo Unzip bag of word dictionnaries
 powershell Expand-Archive fbow_voc.zip -DestinationPath .\data\fbow_voc -F
 del fbow_voc.zip
 
+curl https://repository.solarframework.org/generic/FbowVoc/popsift_uint8.fbow -L -o .\data\fbow_voc\popsift_uint8.fbow
+curl https://repository.solarframework.org/generic/FbowVoc/popsift_uint8_indoor.fbow -L -o .\data\fbow_voc\popsift_uint8_indoor.fbow
+
 :: Download maps
 echo Download and install maps
 curl https://repository.solarframework.org/generic/maps/hololens/bcomLab/mapLabA_win_0_10_0.zip -L -o mapA.zip
