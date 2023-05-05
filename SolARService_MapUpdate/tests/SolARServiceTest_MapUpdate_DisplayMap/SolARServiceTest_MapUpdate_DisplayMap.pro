@@ -93,6 +93,7 @@ linux {
 
 DISTFILES += \
     SolARServiceTest_MapUpdate_DisplayMap_conf.xml \
+    SolARServiceTest_MapUpdate_DisplayMap_cuda_conf.xml \
     packagedependencies.txt \
     docker/build.sh \
     docker/launch.bat \
@@ -102,7 +103,8 @@ DISTFILES += \
     docker/start_client.sh
 
 xml_files.path = $${TARGETDEPLOYDIR}
-xml_files.files =  $$files($${PWD}/SolARServiceTest_MapUpdate_DisplayMap_conf.xml)
+xml_files.files =  $$files($${PWD}/SolARServiceTest_MapUpdate_DisplayMap_conf.xml) \
+                   $$files($${PWD}/SolARServiceTest_MapUpdate_DisplayMap_cuda_conf.xml)
 
 INSTALLS += xml_files
 
