@@ -13,16 +13,21 @@
         </configure>
         -->
 
+        <!-- gRPC proxy configuration-->
+        <configure component="IServiceManagerPipeline_grpcProxy">
+            <property name="channelUrl" access="rw" type="string" value="0.0.0.0:50059"/>
+            <property name="channelCredentials" access="rw" type="uint" value="0"/>
+        </configure>
+
         <configure component="IMapUpdatePipeline_grpcServer">
           <property name="grpc_compress_server" type="string">
             <value>method|mapUpdateRequest|none|0</value>
             <value>method|getMapRequest|deflate|0</value>
             <value>method|getPointCloudRequest|deflate|0</value>
           </property>
-        </configure>
-		
-		<configure component="PipelineMapUpdateProcessing">
-			<property name="nbKeyframeSubmap" type="int" value="50"/>
+        </configure>	
+        <configure component="PipelineMapUpdateProcessing">
+            <property name="nbKeyframeSubmap" type="int" value="50"/>
         </configure>
 
         <!-- map update pipeline configuration -->
@@ -76,6 +81,7 @@
                 <property name="VOCpath" type="String" value="../../../../../data/fbow_voc/akaze.fbow"/>
                 <property name="threshold" type="float" value="0.01"/>
                 <property name="level" type="int" value="3"/>
+                <property name="distanceMetricId" type="int" value="0" description="0:L2; 1:L1; 2:ChiSquare; 3:BHATTACHARYYA; 4:DotProduct; 5:KLS"/>
                 <property name="matchingDistanceRatio" type="float" value="0.8"/>
                 <property name="matchingDistanceMax" type="float" value="500"/>
         </configure>

@@ -13,7 +13,7 @@ RUN mkdir SolARServiceMapUpdate/data
 RUN mkdir SolARServiceMapUpdate/data/fbow_voc
 ADD data/fbow_voc/akaze.fbow /SolARServiceMapUpdate/data/fbow_voc/
 
-# Persistent volume for global map
+## Persistent volume for global map
 VOLUME SolARServiceMapUpdate/data/maps/globalMap
 
 ## Libraries and modules
@@ -32,6 +32,8 @@ RUN chmod +x start_server.sh
 
 ## Set application gRPC server url
 ENV XPCF_GRPC_SERVER_URL=0.0.0.0:8080
+## Set service external URL
+ENV SERVER_EXTERNAL_URL=172.17.0.1:50053
 ## Set application gRPC max receive message size (-1 for max value)
 ENV XPCF_GRPC_MAX_RECV_MSG_SIZE=-1
 ## Set application gRPC max send message size (-1 for max value)
