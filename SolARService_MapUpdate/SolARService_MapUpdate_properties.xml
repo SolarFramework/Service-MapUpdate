@@ -20,81 +20,81 @@
         </configure>
 
         <configure component="IMapUpdatePipeline_grpcServer">
-          <property name="grpc_compress_server" type="string">
-            <value>method|mapUpdateRequest|none|0</value>
-            <value>method|getMapRequest|deflate|0</value>
-            <value>method|getPointCloudRequest|deflate|0</value>
-          </property>
-        </configure>	
+            <property name="grpc_compress_server" type="string">
+                <value>method|mapUpdateRequest|none|0</value>
+                <value>method|getMapRequest|deflate|0</value>
+                <value>method|getPointCloudRequest|deflate|0</value>
+            </property>
+        </configure>
         <configure component="PipelineMapUpdateProcessing">
             <property name="nbKeyframeSubmap" type="int" value="50"/>
         </configure>
 
         <!-- map update pipeline configuration -->
         <configure component="SolARMapManager">
-                <property name="directory" type="string" value="../../../../../data/maps/globalMap"/>
-                <property name="identificationFileName" type="string" value="identification.bin"/>
-                <property name="coordinateFileName" type="string" value="coordinate.bin"/>
-                <property name="pointCloudManagerFileName" type="string" value="pointcloud.bin"/>
-                <property name="keyframesManagerFileName" type="string" value="keyframes.bin"/>
-                <property name="cameraParametersManagerFileName" type="string" value="cameraParameters.bin"/>
-                <property name="covisibilityGraphFileName" type="string" value="covisibility_graph.bin"/>
-                <property name="keyframeRetrieverFileName" type="string" value="keyframe_retriever.bin"/>
-                <property name="reprojErrorThreshold" type="float" value="10.0"/>
-                <property name="thresConfidence" type="float" value="0.03"/>
+            <property name="directory" type="string" value="../../../../../data/maps/globalMap"/>
+            <property name="identificationFileName" type="string" value="identification.bin"/>
+            <property name="coordinateFileName" type="string" value="coordinate.bin"/>
+            <property name="pointCloudManagerFileName" type="string" value="pointcloud.bin"/>
+            <property name="keyframesManagerFileName" type="string" value="keyframes.bin"/>
+            <property name="cameraParametersManagerFileName" type="string" value="cameraParameters.bin"/>
+            <property name="covisibilityGraphFileName" type="string" value="covisibility_graph.bin"/>
+            <property name="keyframeRetrieverFileName" type="string" value="keyframe_retriever.bin"/>
+            <property name="reprojErrorThreshold" type="float" value="10.0"/>
+            <property name="thresConfidence" type="float" value="0.03"/>
         </configure>
         <configure component="SolAROverlapDetector">
-                <property name="minNbInliers" type="int" value="50"/>
+            <property name="minNbInliers" type="int" value="50"/>
         </configure>
         <configure component="SolARMapFusionOpencv">
-                <property name="radius" type="float" value="0.2"/>
+            <property name="radius" type="float" value="0.2"/>
         </configure>
         <configure component="SolARMapUpdate">
-                <property name="thresAngleViewDirection" type="float" value="0.87"/>
+            <property name="thresAngleViewDirection" type="float" value="0.87"/>
         </configure>
         <configure component="SolAR3DTransformEstimationSACFrom3D3D">
-                <property name="iterationsCount" type="int" value="500"/>
-                <property name="reprojError" type="float" value="3.0"/>
-                <property name="distanceError" type="float" value="0.05"/>
-                <property name="confidence" type="float" value="0.9"/>
-                <property name="minNbInliers" type="int" value="30"/>
+            <property name="iterationsCount" type="int" value="500"/>
+            <property name="reprojError" type="float" value="3.0"/>
+            <property name="distanceError" type="float" value="0.05"/>
+            <property name="confidence" type="float" value="0.9"/>
+            <property name="minNbInliers" type="int" value="30"/>
         </configure>
         <configure component="SolARDescriptorMatcherKNNOpencv">
-                <property name="distanceRatio" type="float" value="0.8"/>
+            <property name="distanceRatio" type="float" value="0.8"/>
         </configure>
         <configure component="SolARDescriptorMatcherRegionOpencv">
-                <property name="distanceRatio" type="float" value="0.8"/>
-                <property name="radius" type="float" value="15"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+            <property name="distanceRatio" type="float" value="0.8"/>
+            <property name="radius" type="float" value="15"/>
+            <property name="matchingDistanceMax" type="float" value="500"/>
         </configure>
         <configure component="SolARDescriptorMatcherGeometricOpencv">
-                <property name="distanceRatio" type="float" value="0.7"/>
-                <property name="paddingRatio" type="float" value="0.003"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+            <property name="distanceRatio" type="float" value="0.7"/>
+            <property name="paddingRatio" type="float" value="0.003"/>
+            <property name="matchingDistanceMax" type="float" value="500"/>
         </configure>
         <configure component="SolARGeometricMatchesFilterOpencv">
-                <property name="confidence" type="float" value="0.99"/>
-                <property name="outlierDistanceRatio" type="float" value="0.005"/>
-                <property name="epilinesDistance" type="float" value="3.0"/>
-        </configure>       
+            <property name="confidence" type="float" value="0.99"/>
+            <property name="outlierDistanceRatio" type="float" value="0.005"/>
+            <property name="epilinesDistance" type="float" value="3.0"/>
+        </configure>
         <configure component="SolARKeyframeRetrieverFBOW">
-                <property name="VOCpath" type="String" value="../../../../../data/fbow_voc/akaze.fbow"/>
-                <property name="threshold" type="float" value="0.01"/>
-                <property name="level" type="int" value="3"/>
-                <property name="distanceMetricId" type="int" value="0" description="0:L2; 1:L1; 2:ChiSquare; 3:BHATTACHARYYA; 4:DotProduct; 5:KLS"/>
-                <property name="matchingDistanceRatio" type="float" value="0.8"/>
-                <property name="matchingDistanceMax" type="float" value="500"/>
+            <property name="VOCpath" type="String" value="../../../../../data/fbow_voc/akaze.fbow"/>
+            <property name="threshold" type="float" value="0.01"/>
+            <property name="level" type="int" value="3"/>
+            <property name="distanceMetricId" type="int" value="0" description="0:L2; 1:L1; 2:ChiSquare; 3:BHATTACHARYYA; 4:DotProduct; 5:KLS"/>
+            <property name="matchingDistanceRatio" type="float" value="0.8"/>
+            <property name="matchingDistanceMax" type="float" value="500"/>
         </configure>
         <configure component="SolAROptimizationG2O">
-                <property name="nbIterationsLocal" type="int" value="10"/>
-                <property name="nbIterationsGlobal" type="int" value="20"/>
-                <property name="setVerbose" type="int" value="0"/>
-                <property name="nbMaxFixedKeyframes" type="int" value="20"/>
-                <property name="errorOutlier" type="float" value="10.0"/>
-                <property name="useSpanningTree" type="int" value="0"/>
-                <property name="isRobust" type="int" value="0"/>
-                <property name="fixedMap" type="int" value="0"/>
-                <property name="fixedKeyframes" type="int" value="0"/>
+            <property name="nbIterationsLocal" type="int" value="10"/>
+            <property name="nbIterationsGlobal" type="int" value="20"/>
+            <property name="setVerbose" type="int" value="0"/>
+            <property name="nbMaxFixedKeyframes" type="int" value="20"/>
+            <property name="errorOutlier" type="float" value="10.0"/>
+            <property name="useSpanningTree" type="int" value="0"/>
+            <property name="isRobust" type="int" value="0"/>
+            <property name="fixedMap" type="int" value="0"/>
+            <property name="fixedKeyframes" type="int" value="0"/>
         </configure>
     </properties>
 </xpcf-registry>
