@@ -22,11 +22,13 @@ fi
 
 echo "Try to replace the Service Manager URL in the XML configuration file..."
 
-sed -i -e "s/SERVICE_MANAGER_URL/$SERVICE_MANAGER_URL/g" /.xpcf/SolARService_MapUpdate_properties_cuda.xml
+cp /.xpcf/SolARService_MapUpdate_properties_cuda.xml /tmp/
+
+sed -i -e "s/SERVICE_MANAGER_URL/$SERVICE_MANAGER_URL/g" /tmp/SolARService_MapUpdate_properties_cuda.xml
 
 echo "XML configuration file ready"
 
 export LD_LIBRARY_PATH=/SolARServiceMapUpdate:/SolARServiceMapUpdate/modules/
 cd /SolARServiceMapUpdate
-./SolARService_MapUpdate -m /.xpcf/SolARService_MapUpdate_modules_cuda.xml -p /.xpcf/SolARService_MapUpdate_properties_cuda.xml
+./SolARService_MapUpdate -m /.xpcf/SolARService_MapUpdate_modules_cuda.xml -p /tmp/SolARService_MapUpdate_properties_cuda.xml
 
