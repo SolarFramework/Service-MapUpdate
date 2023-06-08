@@ -28,10 +28,15 @@ export SERVICE_MANAGER_URL=$2
 # Log level expected: DEBUG, CRITICAL, ERROR, INFO, TRACE, WARNING
 export SOLAR_LOG_LEVEL=INFO
 
+# Define path for local configuration files
+export CONFIG_FILE_PATH=$HOME/.arcad/config_files/config_files_mapupdate
+
+mkdir -p $CONFIG_FILE_PATH
+
 docker volume create \
   --driver local \
   --opt type="none" \
-  --opt device="$HOME/.arcad/config_files/config_files_mapupdate" \
+  --opt device=$CONFIG_FILE_PATH \
   --opt o="bind" config_files_mapupdate
 
 docker rm -f solarservicemapupdatecuda
