@@ -9,8 +9,8 @@ node("master") {
         buildDir= \
         "SolARService_MapUpdate,\
          SolARService_MapUpdate/tests/SolARServiceTest_MapUpdate,\
-		 SolARService_MapUpdate/tests/SolARServiceTest_MapUpdate_DisplayMap"
-		win=false
+         SolARService_MapUpdate/tests/SolARServiceTest_MapUpdate_DisplayMap"
+        win=false
         packageScripts="bundleServices"
     }
 
