@@ -22,11 +22,19 @@ IF "%2"=="" (
 
 ECHO Display IP = %DISPLAY%
 
+ECHO Get backup/restore options
+IF "%3"=="" (
+    ECHO You can specify global map backup or restore options with keywords BACKUPMAP or RESTOREMAP
+) ELSE (
+    ECHO Set option = %3
+    SET MAP_OPTION=%3
+)
+
 REM Set application log level
 REM Log level expected: DEBUG, CRITICAL, ERROR, INFO, TRACE, WARNING
 SET SOLAR_LOG_LEVEL=INFO
 
 docker rm -f solarservicemapupdatedisplaymapclient
-docker run -it -d -e DISPLAY -e MAPUPDATE_SERVICE_URL -e SOLAR_LOG_LEVEL -e "SERVICE_NAME=SolARServiceMapUpdateDisplayMapClient" -v /tmp/.X11-unix:/tmp/.X11-unix --net=host --log-opt max-size=50m -e "SERVICE_TAGS=SolAR" --name solarservicemapupdatedisplaymapclient artwin/solar/services/map-update-displaymap-client:latest
+docker run -it -d -v $PWD/map_backup:/SolARServiceMapUpdateDisplayMapClient/MapBackup -e DISPLAY -e MAPUPDATE_SERVICE_URL -e MAP_OPTION -e SOLAR_LOG_LEVEL -e "SERVICE_NAME=SolARServiceMapUpdateDisplayMapClient" -v /tmp/.X11-unix:/tmp/.X11-unix --net=host --log-opt max-size=50m -e "SERVICE_TAGS=SolAR" --name solarservicemapupdatedisplaymapclient artwin/solar/services/map-update-displaymap-client:latest
 
 :end

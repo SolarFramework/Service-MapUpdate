@@ -6,7 +6,7 @@ QMAKE_PROJECT_DEPTH = 0
 
 ## global defintions : target lib name, version
 TARGET = SolARServiceTest_MapUpdate_DisplayMap
-VERSION=0.11.0
+VERSION=1.0.0
 PROJECTDEPLOYDIR = $${PWD}/../../../deploy
 
 CONFIG += c++1z
@@ -51,17 +51,6 @@ unix {
 
 linux {
     LIBS += -ldl
-}
-
-macx {
-    DEFINES += _MACOS_TARGET_
-    QMAKE_MAC_SDK= macosx
-    QMAKE_CFLAGS += -mmacosx-version-min=10.7 #-x objective-c++
-    QMAKE_CXXFLAGS += -mmacosx-version-min=10.7  -std=c++17 -fPIC#-x objective-c++
-    QMAKE_LFLAGS += -mmacosx-version-min=10.7 -v -lstdc++
-    LIBS += -lstdc++ -lc -lpthread
-    LIBS += -L/usr/local/lib
-    INCLUDEPATH += $${REMAKENDEPSFOLDER}/$${BCOM_TARGET_PLATFORM}/xpcfSampleComponent/$$VERSION/interfaces
 }
 
 win32 {

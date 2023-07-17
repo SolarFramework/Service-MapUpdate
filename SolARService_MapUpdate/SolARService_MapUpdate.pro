@@ -6,7 +6,7 @@ QMAKE_PROJECT_DEPTH = 0
 
 ## global defintions : target lib name, version
 TARGET = SolARService_MapUpdate
-VERSION = 0.11.0
+VERSION=1.0.0
 PROJECTDEPLOYDIR = $${PWD}/../deploy
 
 CONFIG += c++1z
@@ -58,17 +58,6 @@ linux {
     LIBS += -L/home/linuxbrew/.linuxbrew/lib # temporary fix caused by grpc with -lre2 ... without -L in grpc.pc
 }
 
-
-macx {
-    DEFINES += _MACOS_TARGET_
-    QMAKE_MAC_SDK= macosx
-    QMAKE_CFLAGS += -mmacosx-version-min=10.7 #-x objective-c++
-    QMAKE_CXXFLAGS += -mmacosx-version-min=10.7  -std=c++17 -fPIC#-x objective-c++
-    QMAKE_LFLAGS += -mmacosx-version-min=10.7 -v -lstdc++
-    LIBS += -lstdc++ -lc -lpthread
-    LIBS += -L/usr/local/lib
-}
-
 win32 {
     QMAKE_LFLAGS += /MACHINE:X64
     DEFINES += WIN64 UNICODE _UNICODE
@@ -115,7 +104,6 @@ DISTFILES += \
     docker/launch.sh \
     docker/launch_cuda.bat \
     docker/launch_cuda.sh \
-    docker/mapupdate-service-manifest.yaml \
     docker/start_server.sh \
     docker/start_server_cuda.sh \
     packagedependencies.txt \
